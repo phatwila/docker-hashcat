@@ -2,7 +2,7 @@ Fork of https://github.com/dizcza/docker-hashcat
 
 [![Docker Hub](https://dockeri.co/image/b1ker/hashcat-docker)](https://hub.docker.com/r/b1ker/hashcat-docker/)
 
-[Hashcat](https://hashcat.net/hashcat/) git based build (beta/dev) with hashcat utils on Ubuntu 18.04 OpenCL for Nvidia GPUs (`:latest`) and Intel CPU (`:intel-cpu`).
+[Hashcat](https://hashcat.net/hashcat/) git based build (beta/dev) with hashcat utils on Ubuntu 18.04 OpenCL for Nvidia GPUs (`:latest`).
 
 ```
 docker pull b1ker/docker-hashcat

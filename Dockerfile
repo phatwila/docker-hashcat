@@ -21,7 +21,6 @@ ENV NVIDIA_VISIBLE_DEVICES all
 ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
 ################################ end nvidia opencl driver ################################
 
-ENV HASHCAT_VERSION        hashcat-5.1.0
 ENV HASHCAT_UTILS_VERSION  1.9
 ENV HCXTOOLS_VERSION       5.3.0
 ENV HCXDUMPTOOL_VERSION    6.0.1
@@ -33,9 +32,7 @@ RUN apt-get update && \
 RUN mkdir /hashcat
 
 WORKDIR /hashcat
-RUN wget --no-check-certificate https://hashcat.net/files/${HASHCAT_VERSION}.7z && \
-    7zr x ${HASHCAT_VERSION}.7z && \
-    rm ${HASHCAT_VERSION}.7z
+RUN git clone https://github.com/hashcat/hashcat.git . && git submodule update --init && make install
 
 RUN wget --no-check-certificate https://github.com/hashcat/hashcat-utils/releases/download/v${HASHCAT_UTILS_VERSION}/hashcat-utils-${HASHCAT_UTILS_VERSION}.7z && \
     7zr x hashcat-utils-${HASHCAT_UTILS_VERSION}.7z && \
@@ -63,6 +60,5 @@ RUN make
 WORKDIR /hashcat
 
 #Add link for binary
-RUN ln -s /hashcat/${HASHCAT_VERSION}/hashcat64.bin /usr/bin/hashcat
 RUN ln -s /hashcat/hashcat-utils-${HASHCAT_UTILS_VERSION}/bin/cap2hccapx.bin /usr/bin/cap2hccapx
 RUN ln -s /hashcat/kwprocessor/kwp /usr/bin/kwp

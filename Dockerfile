@@ -27,7 +27,16 @@ ENV HCXDUMPTOOL_VERSION    6.0.1
 
 # Update & install packages for installing hashcat
 RUN apt-get update && \
-    apt-get install -y wget p7zip make build-essential git libcurl4-openssl-dev libssl-dev zlib1g-dev
+    apt-get install -y wget zip p7zip git python3 curl python3-psutil pciutils python3-requests make build-essential git libcurl4-openssl-dev libssl-dev zlib1g-dev
+
+RUN apt update && apt install -y --no-install-recommends \
+  zip \
+  git \
+  python3 \
+  python3-psutil \
+  python3-requests \
+  pciutils \
+  curl
 
 RUN mkdir /hashcat
 
@@ -62,3 +71,9 @@ WORKDIR /hashcat
 #Add link for binary
 RUN ln -s /hashcat/hashcat-utils-${HASHCAT_UTILS_VERSION}/bin/cap2hccapx.bin /usr/bin/cap2hccapx
 RUN ln -s /hashcat/kwprocessor/kwp /usr/bin/kwp
+
+RUN git clone -b current-dev --single-branch https://github.com/s3inlc/hashtopolis-agent-python.git && \
+  cd hashtopolis-agent-python && \
+  ./build.sh && \
+  mv hashtopolis.zip ../ && \
+  cd ../ && rm -R hashtopolis-agent-python
